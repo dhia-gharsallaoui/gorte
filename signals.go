@@ -124,7 +124,7 @@ func (signal *Signal) ToGrid(onlyPP bool) []GridPeak {
 	gridpeak := make([]GridPeak, 0)
 	for i, ppsignal := range signal.Signals[0].Values {
 		if signal.Signals[0].Values[i].Value && signal.Signals[1].Values[i].Value {
-			stype = "PP1/PP2"
+			stype = "PP1"
 		} else if signal.Signals[1].Values[i].Value {
 			stype = "PP2"
 		} else {
