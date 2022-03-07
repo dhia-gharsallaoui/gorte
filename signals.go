@@ -7,23 +7,19 @@ import (
 	"log"
 	"net/http"
 	"time"
-
-	"github.com/davecgh/go-spew/spew"
 )
-
-type SignalValue struct {
-	StartDate   time.Time `json:"start_date"`
-	EndDate     time.Time `json:"end_date"`
-	Value       bool      `json:"value"`
-	UpdatedDate time.Time `json:"updated_date"`
-}
 
 type Signal struct {
 	Signals []struct {
-		StartDate time.Time     `json:"start_date"`
-		EndDate   time.Time     `json:"end_date"`
-		Type      string        `json:"type"`
-		Values    []SignalValue `json:"values"`
+		StartDate time.Time `json:"start_date"`
+		EndDate   time.Time `json:"end_date"`
+		Type      string    `json:"type"`
+		Values    []struct {
+			StartDate   time.Time `json:"start_date"`
+			EndDate     time.Time `json:"end_date"`
+			Value       bool      `json:"value"`
+			UpdatedDate time.Time `json:"updated_date"`
+		} `json:"values"`
 	} `json:"signals"`
 }
 
@@ -93,7 +89,6 @@ func (c *Client) GetSignals(startDate, endDate interface{}) (*Signal, error) {
 		return nil, err
 	}
 	dates := *dd
-	spew.Dump(dates)
 	req, err := http.NewRequest(c.config.method, c.config.apiAdress, nil)
 	if err != nil {
 		return nil, err
