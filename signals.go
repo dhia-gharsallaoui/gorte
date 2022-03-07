@@ -30,6 +30,9 @@ type GridPeak struct {
 }
 
 func (c *Client) GetSignals(startDate, endDate interface{}) (*Signal, error) {
+	c.config.method = "GET"
+	c.config.apiAdress = "https://digital.iservices.rte-france.com/open_api/signal/v1/signals"
+
 	err := c.ConfigCheck()
 	if err != nil {
 		return nil, err
