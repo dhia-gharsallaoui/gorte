@@ -6,6 +6,14 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
+	"strings"
+
+	"github.com/hashicorp/go-retryablehttp"
+)
+
+const (
+	defaultBaseURL = "https://digital.iservices.rte-france.com/"
 )
 
 type AuthToken struct {
@@ -15,44 +23,69 @@ type AuthToken struct {
 }
 
 type ClientConfig struct {
-	authAdress string `default:"https://digital.iservices.rte-france.com/token/oauth/"`
-	host       string `default:digital.iservices.rte-france.com`
-	token      string
-	method     string // "GET" "POST"
-	apiAdress  string
+	AuthAdress string `default:"https://digital.iservices.rte-france.com/token/oauth/"`
+	Host       string `default:digital.iservices.rte-france.com`
+	Token      string
+	Method     string // "GET" "POST"
+	ApiAdress  string
 }
 
 type Client struct {
-	config ClientConfig
-	token  AuthToken
-	client *http.Client
+	client  *retryablehttp.Client
+	baseURL *url.URL
+	config  ClientConfig
+	token   AuthToken
 }
 
-func (c *Client) NewClient() error {
-	if c.config.token == "" {
+func (c *Client) setBaseURL(urlStr string) error {
+	// Make sure the given URL end with a slash
+	if !strings.HasSuffix(urlStr, "/") {
+		urlStr += "/"
+	}
+
+	baseURL, err := url.Parse(urlStr)
+	if err != nil {
+		return err
+	}
+
+	// Update the base URL of the client.
+	c.baseURL = baseURL
+
+	return nil
+}
+
+func (c *Client) NewClient(config ClientConfig) error {
+	if c.baseURL == nil {
+		c.setBaseURL(defaultBaseURL)
+	}
+	if config.Token == "" {
 		return errors.New("Can't connect without the RTE token in Base 64 format. To get one subscribe to the API.")
 	}
 
-	if c.config.authAdress == "" {
-		c.config.authAdress = "https://digital.iservices.rte-france.com/token/oauth/"
+	if config.AuthAdress == "" {
+		config.AuthAdress = "https://digital.iservices.rte-france.com/token/oauth/"
 	}
-	if c.config.host == "" {
-		c.config.host = "digital.iservices.rte-france.com"
+	if config.Host == "" {
+		config.Host = "digital.iservices.rte-france.com"
 	}
+	c.config = config
 
-	c.client = &http.Client{}
+	retryClient := retryablehttp.NewClient()
+	retryClient.RetryMax = 10
+
+	c.client = retryClient
 	ctype := "application/json"
 
-	auth := "Basic " + c.config.token
+	auth := "Basic " + config.Token
 
-	req, err := http.NewRequest("POST", c.config.authAdress, nil)
+	req, err := http.NewRequest("POST", config.AuthAdress, nil)
 	if err != nil {
 		return err
 	}
 
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("Authorization", auth)
-	resp, err := c.client.Do(req)
+	resp, err := c.client.HTTPClient.Do(req)
 	if err != nil {
 		return err
 	}
@@ -71,10 +104,10 @@ func (c *Client) NewClient() error {
 }
 
 func (c *Client) ConfigCheck() error {
-	if c.config.method == "" {
+	if c.config.Method == "" {
 		return errors.New("No method provided")
 	}
-	if c.config.apiAdress == "" {
+	if c.config.ApiAdress == "" {
 		return errors.New("No API adress provided in the client config")
 	}
 	return nil
