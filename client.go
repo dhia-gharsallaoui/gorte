@@ -23,11 +23,8 @@ type AuthToken struct {
 }
 
 type ClientConfig struct {
-	AuthAdress string `default:"https://digital.iservices.rte-france.com/token/oauth/"`
-	Host       string `default:digital.iservices.rte-france.com`
-	Token      string
-	Method     string // "GET" "POST"
-	ApiAdress  string
+	Token   string
+	baseURL string `default:"https://digital.iservices.rte-france.com/"`
 }
 
 type Client struct {
@@ -37,68 +34,60 @@ type Client struct {
 	token   AuthToken
 }
 
-func (c *Client) setBaseURL(urlStr string) error {
+func setURL(urlStr string) (*url.URL, error) {
 	// Make sure the given URL end with a slash
 	if !strings.HasSuffix(urlStr, "/") {
 		urlStr += "/"
 	}
 
-	baseURL, err := url.Parse(urlStr)
+	URL, err := url.Parse(urlStr)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	// Update the base URL of the client.
-	c.baseURL = baseURL
-
-	return nil
+	return URL, nil
 }
 
-func (c *Client) NewClient(config ClientConfig) error {
-	if c.baseURL == nil {
-		c.setBaseURL(defaultBaseURL)
-	}
+func NewClient(config ClientConfig) (*Client, error) {
 	if config.Token == "" {
-		return errors.New("Can't connect without the RTE token in Base 64 format. To get one subscribe to the API.")
+		return nil, errors.New("can't connect without the RTE token in Base 64 format. to get one subscribe to the API")
 	}
 
-	if config.AuthAdress == "" {
-		config.AuthAdress = "https://digital.iservices.rte-france.com/token/oauth/"
-	}
-	if config.Host == "" {
-		config.Host = "digital.iservices.rte-france.com"
+	c := Client{}
+	var err error
+	if config.baseURL == "" {
+		c.baseURL, err = setURL(defaultBaseURL)
+		if err != nil {
+			return nil, err
+		}
 	}
 	c.config = config
-
-	retryClient := retryablehttp.NewClient()
-	retryClient.RetryMax = 10
-
-	c.client = retryClient
-	ctype := "application/json"
-
-	auth := "Basic " + config.Token
-
-	req, err := http.NewRequest("POST", config.AuthAdress, nil)
+	c.client = retryablehttp.NewClient()
+	c.client.RetryMax = 10
+	authURL, err := URLGenerator(c.baseURL, "token/oauth/")
 	if err != nil {
-		return err
+		return nil, err
 	}
-
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("Authorization", auth)
+	req, err := http.NewRequest("POST", authURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Basic "+config.Token)
 	resp, err := c.client.HTTPClient.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	var token AuthToken
 	if err := json.Unmarshal(body, &token); err != nil {
-		return err
+		return nil, err
 	} else {
 		log.Println("Client was successfully created !!!")
 	}
 
 	c.token = token
-	return nil
+	return &c, nil
 }
