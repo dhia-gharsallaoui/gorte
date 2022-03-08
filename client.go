@@ -102,14 +102,3 @@ func (c *Client) NewClient(config ClientConfig) error {
 	c.token = token
 	return nil
 }
-
-func (c *Client) ConfigCheck() error {
-	if c.config.Method == "" {
-		return errors.New("No method provided")
-	}
-	if c.config.ApiAdress == "" {
-		return errors.New("No API adress provided in the client config")
-	}
-	return nil
-
-}
