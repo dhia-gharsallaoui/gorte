@@ -5,11 +5,6 @@ import (
 	"time"
 )
 
-type GetSignalsOptions struct {
-	StartDate Time `url:"start_date"`
-	EndDate   Time `url:"end_date"`
-}
-
 type Signals struct {
 	Signal []struct {
 		StartDate time.Time `json:"start_date"`
@@ -24,18 +19,16 @@ type Signals struct {
 	} `json:"signals"`
 }
 
-func (c *Client) GetSignals(opt *GetSignalsOptions) (*Signals, *http.Response, error) {
-
-	req, err := c.NewRequest("GET", "open_api/signal/v1/signals", opt)
-
+func (s *Market) GetSignals(opt *Period) (*Signals, *http.Response, error) {
+	c := s.client
+	req, err := c.NewRequest(http.MethodGet, "open_api/signal/v1/signals", opt)
 	if err != nil {
 		return nil, nil, err
 	}
-	var sig *Signals
-	resp, err := c.Do(req, &sig)
+	sig := &Signals{}
+	resp, err := c.Do(req, sig)
 	if err != nil {
 		return nil, resp, err
 	}
-
 	return sig, resp, err
 }

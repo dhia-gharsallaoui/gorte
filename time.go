@@ -16,3 +16,8 @@ func (t Time) EncodeValues(key string, v *url.Values) error {
 	v.Set(key, time.Time(t).Format(layout))
 	return nil
 }
+
+type Period struct {
+	StartDate Time `url:"start_date"`
+	EndDate   Time `url:"end_date"`
+}

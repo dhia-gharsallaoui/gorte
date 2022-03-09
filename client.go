@@ -32,6 +32,7 @@ type Client struct {
 	baseURL *url.URL
 	config  ClientConfig
 	token   AuthToken
+	market  *Market
 }
 
 func setURL(urlStr string) (*url.URL, error) {
@@ -44,7 +45,6 @@ func setURL(urlStr string) (*url.URL, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return URL, nil
 }
 
@@ -52,7 +52,6 @@ func NewClient(config ClientConfig) (*Client, error) {
 	if config.Token == "" {
 		return nil, errors.New("can't connect without the RTE token in Base 64 format. to get one subscribe to the API")
 	}
-
 	c := Client{}
 	var err error
 	if config.baseURL == "" {
@@ -87,7 +86,7 @@ func NewClient(config ClientConfig) (*Client, error) {
 	} else {
 		log.Println("Client was successfully created !!!")
 	}
-
 	c.token = token
+	c.market = &Market{client: &c}
 	return &c, nil
 }
