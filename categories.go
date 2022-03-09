@@ -1,4 +1,4 @@
-package main
+package gorte
 
 type Market struct {
 	client *Client
