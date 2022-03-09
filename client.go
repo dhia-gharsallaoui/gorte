@@ -28,11 +28,12 @@ type ClientConfig struct {
 }
 
 type Client struct {
-	client  *retryablehttp.Client
-	baseURL *url.URL
-	config  ClientConfig
-	token   AuthToken
-	market  *Market
+	client      *retryablehttp.Client
+	baseURL     *url.URL
+	config      ClientConfig
+	token       AuthToken
+	market      *Market
+	consumption *Consumption
 }
 
 func setURL(urlStr string) (*url.URL, error) {
@@ -88,5 +89,6 @@ func NewClient(config ClientConfig) (*Client, error) {
 	}
 	c.token = token
 	c.market = &Market{client: &c}
+	c.consumption = &Consumption{client: &c}
 	return &c, nil
 }
