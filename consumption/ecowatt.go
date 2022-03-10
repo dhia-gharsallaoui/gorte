@@ -1,4 +1,4 @@
-package gorte
+package consumption
 
 import (
 	"net/http"
