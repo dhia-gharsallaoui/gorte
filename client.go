@@ -34,6 +34,9 @@ type Client struct {
 	token       AuthToken
 	market      *Market
 	consumption *Consumption
+	partners    *Partners
+	generation  *Generation
+	exchanges   *Exchanges
 }
 
 func setURL(urlStr string) (*url.URL, error) {
@@ -90,5 +93,9 @@ func NewClient(config ClientConfig) (*Client, error) {
 	c.token = token
 	c.market = &Market{client: &c}
 	c.consumption = &Consumption{client: &c}
+	c.partners = &Partners{client: &c}
+	c.generation = &Generation{client: &c}
+	c.exchanges = &Exchanges{client: &c}
+
 	return &c, nil
 }
