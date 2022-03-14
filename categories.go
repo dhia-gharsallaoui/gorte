@@ -1,20 +1,20 @@
 package gorte
 
-type Market struct {
+type market struct {
 	client *Client
 }
 
-type Consumption struct {
+type consumption struct {
 	client *Client
 }
 
-type Partners struct {
+type partners struct {
 	client *Client
 }
 
-type Generation struct {
+type generation struct {
 	client *Client
 }
-type Exchanges struct {
+type exchanges struct {
 	client *Client
 }

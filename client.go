@@ -32,11 +32,11 @@ type Client struct {
 	baseURL     *url.URL
 	config      ClientConfig
 	token       AuthToken
-	market      *Market
-	consumption *Consumption
-	partners    *Partners
-	generation  *Generation
-	exchanges   *Exchanges
+	Market      *market
+	Consumption *consumption
+	Partners    *partners
+	Generation  *generation
+	Exchanges   *exchanges
 }
 
 func setURL(urlStr string) (*url.URL, error) {
