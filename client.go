@@ -91,11 +91,11 @@ func NewClient(config ClientConfig) (*Client, error) {
 		log.Println("Client was successfully created !!!")
 	}
 	c.token = token
-	c.market = &Market{client: &c}
-	c.consumption = &Consumption{client: &c}
-	c.partners = &Partners{client: &c}
-	c.generation = &Generation{client: &c}
-	c.exchanges = &Exchanges{client: &c}
+	c.Market = &market{client: &c}
+	c.Consumption = &consumption{client: &c}
+	c.Partners = &partners{client: &c}
+	c.Generation = &generation{client: &c}
+	c.Exchanges = &exchanges{client: &c}
 
 	return &c, nil
 }
