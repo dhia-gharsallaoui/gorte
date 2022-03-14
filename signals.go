@@ -5,17 +5,19 @@ import (
 	"time"
 )
 
+type SignalValue struct {
+	StartDate   time.Time `json:"start_date"`
+	EndDate     time.Time `json:"end_date"`
+	Value       bool      `json:"value"`
+	UpdatedDate time.Time `json:"updated_date"`
+}
+
 type Signals struct {
 	Signal []struct {
-		StartDate time.Time `json:"start_date"`
-		EndDate   time.Time `json:"end_date"`
-		Type      string    `json:"type"`
-		Values    []struct {
-			StartDate   time.Time `json:"start_date"`
-			EndDate     time.Time `json:"end_date"`
-			Value       bool      `json:"value"`
-			UpdatedDate time.Time `json:"updated_date"`
-		} `json:"values"`
+		StartDate time.Time     `json:"start_date"`
+		EndDate   time.Time     `json:"end_date"`
+		Type      string        `json:"type"`
+		Values    []SignalValue `json:"values"`
 	} `json:"signals"`
 }
 
