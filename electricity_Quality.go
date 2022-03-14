@@ -32,7 +32,7 @@ type GetQualityDataOptions struct {
 	Type      string `url:"data_type"`
 }
 
-func (co *Consumption) GetQualityData(opt *GetQualityDataOptions) (*QualityDataResp, *http.Response, error) {
+func (co *consumption) GetQualityData(opt *GetQualityDataOptions) (*QualityDataResp, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "private_api/electricity_quality/v1/quality_data", opt)
 	if err != nil {

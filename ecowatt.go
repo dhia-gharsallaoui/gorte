@@ -26,7 +26,7 @@ type SignalEcowatt struct {
 	} `json:"signals"`
 }
 
-func (co *Consumption) GetSignalEcowatt(opt *Period) (*SignalEcowatt, *http.Response, error) {
+func (co *consumption) GetSignalEcowatt(opt *Period) (*SignalEcowatt, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/ecowatt/v3/signals", opt)
 	if err != nil {
