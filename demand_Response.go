@@ -19,7 +19,7 @@ type OperatorsResp struct {
 	} `json:"operators"`
 }
 
-func (co *Consumption) GetOperators(opt *Period) (*OperatorsResp, *http.Response, error) {
+func (co *consumption) GetOperators(opt *Period) (*OperatorsResp, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/demand_response/v1/operators", opt)
 	if err != nil {
@@ -46,7 +46,7 @@ type VolumesResp struct {
 	} `json:"volumes"`
 }
 
-func (co *Consumption) GetVolumes(opt *Period) (*VolumesResp, *http.Response, error) {
+func (co *consumption) GetVolumes(opt *Period) (*VolumesResp, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/demand_response/v1/volumes", opt)
 	if err != nil {
