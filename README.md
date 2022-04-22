@@ -152,8 +152,8 @@ func main() {
         if err != nil {
                 fmt.Println(err)
         }
-        opt := Period{Time(st), Time(et)}
-        signals, _, err := Client.Market.GetSignals(opt)
+        opt := gorte.Period{gorte.Time(st), gorte.Time(et)}
+        signals, _, err := client.Market.GetSignals(opt)
         if err != nil {
                 fmt.Println(err)
         }
