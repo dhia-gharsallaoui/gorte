@@ -53,18 +53,18 @@ func setURL(urlStr string) (*url.URL, error) {
 }
 
 func NewClient(config ClientConfig) (*Client, error) {
-	if config.Token == "" {
+	if config.Key == "" {
 		return nil, errors.New("can't connect without the RTE token in Base 64 format. to get one subscribe to the API")
 	}
 	c := Client{}
 	var err error
 	if config.BaseURL == "" {
-		config.BaseURL, err = setURL(defaultBaseURL)
-		if err != nil {
-			return nil, err
-		}
+		config.BaseURL = defaultBaseURL
 	}
-	c.baseURL = config.BaseURL
+	c.baseURL, err = setURL(config.BaseURL)
+	if err != nil {
+		return nil, err
+	}
 	c.config = config
 	c.client = retryablehttp.NewClient()
 	c.client.RetryMax = 10
@@ -77,7 +77,7 @@ func NewClient(config ClientConfig) (*Client, error) {
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Basic "+config.Token)
+	req.Header.Set("Authorization", "Basic "+config.Key)
 	resp, err := c.client.HTTPClient.Do(req)
 	if err != nil {
 		return nil, err
