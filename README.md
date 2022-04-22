@@ -58,7 +58,7 @@ After preparing our configuration we can call an API from the available categori
 
 For exemple to get the "Peak Period" signals from `2022-03-01 23:00` to `2022-03-09 13:00`.
 ```Go
-signals, _, err := Client.Market.GetSignals(opt)
+signals, _, err := Client.Market.GetSignals(&opt)
 ```
 
 ### Available APIs
@@ -67,14 +67,14 @@ signals, _, err := Client.Market.GetSignals(opt)
 - [ ] [Consolidated Consumption](https://data.rte-france.com/catalog/-/api/consumption/Consolidated-Consumption/v1.0)
 - [x] [Consumption](https://data.rte-france.com/catalog/-/api/consumption/Consumption/v1.2)
 ```Go
-client.Consumption.GetAnnualForecasts(opt)
-client.Consumption.GetShortTerm(opt)
-client.Consumption.GetWeeklyForecasts(opt)
+client.Consumption.GetAnnualForecasts(&opt)
+client.Consumption.GetShortTerm(&opt)
+client.Consumption.GetWeeklyForecasts(&opt)
 ```
 - [x] [Demand Response](https://data.rte-france.com/catalog/-/api/consumption/Demand-Response/v1.0)
 ```Go
-client.Consumption.GetOperators(opt)
-client.Consumption.GetVolumes(opt)
+client.Consumption.GetOperators(&opt)
+client.Consumption.GetVolumes(&opt)
 ```
 - [x] [Electricity Quality](https://data.rte-france.com/catalog/-/api/consumption/Electricity-Quality/v1.0)
 ```Go
@@ -87,11 +87,11 @@ client.Consumption.GetQualityData(gorte.GetQualityDataOptions{
 ```
 - [x] [Ecowatt](https://data.rte-france.com/catalog/-/api/consumption/Ecowatt/v3.0)
 ```Go
-client.Consumption.GetSignalEcowatt(opt)
+client.Consumption.GetSignalEcowatt(&opt)
 ```
 - [x] [Tempo Like Supply Contract](https://data.rte-france.com/catalog/-/api/consumption/Tempo-Like-Supply-Contract/v1.1)
 ```Go 
-client.Consumption.GetTempoLikeCalendars(opt)
+client.Consumption.GetTempoLikeCalendars(&opt)
 ```
 #### Exchanges
 > Not implemented yet.
@@ -105,24 +105,24 @@ client.Consumption.GetTempoLikeCalendars(opt)
 #### Market
 - [x] [Balancing Capacity](https://data.rte-france.com/catalog/-/api/market/Balancing-Capacity/v4.1) 
 ```Go
-client.Market.GetAcceptedOffers(opt)
-client.Market.GetAggregatedoffersAFRREnergybids(opt)
-client.Market.GetAggregatedoffersEnergybids(opt)
-client.Market.GetDailyProcuredReserves(opt)
-client.Market.GetImbalance(opt)
-client.Market.GetIndividualoffersEnergybids(opt)
-client.Market.GetInsufficientsOffers(opt)
-client.Market.GetMarginsData(opt)
-client.Market.GetNeeds(opt)
-client.Market.GetPeakDailyMargins(opt)
-client.Market.GetProcuredReservesResp(opt)
+client.Market.GetAcceptedOffers(&opt)
+client.Market.GetAggregatedoffersAFRREnergybids(&opt)
+client.Market.GetAggregatedoffersEnergybids(&opt)
+client.Market.GetDailyProcuredReserves(&opt)
+client.Market.GetImbalance(&opt)
+client.Market.GetIndividualoffersEnergybids(&opt)
+client.Market.GetInsufficientsOffers(&opt)
+client.Market.GetMarginsData(&opt)
+client.Market.GetNeeds(&opt)
+client.Market.GetPeakDailyMargins(&opt)
+client.Market.GetProcuredReservesResp(&opt)
 ```
 - [ ] [Balancing Energy](https://data.rte-france.com/catalog/-/api/market/Balancing-Energy/v1.2)
 - [ ] [Bre Referential](https://data.rte-france.com/catalog/-/api/market/Bre-Referential/v1.0)
 - [x] [Demand Response Signal](https://data.rte-france.com/catalog/-/api/market/Demand-Response-Signal/v1.0)
 ```Go                           
-client.Market.GetOperators(opt)
-client.Market.GetVolumes(opt) 
+client.Market.GetOperators(&opt)
+client.Market.GetVolumes(&opt) 
 ```
 - [ ] [Wholesale Market](https://data.rte-france.com/catalog/-/api/market/Wholesale-Market/v2.0)
 
@@ -153,7 +153,7 @@ func main() {
                 fmt.Println(err)
         }
         opt := gorte.Period{gorte.Time(st), gorte.Time(et)}
-        signals, _, err := client.Market.GetSignals(opt)
+        signals, _, err := client.Market.GetSignals(&opt)
         if err != nil {
                 fmt.Println(err)
         }
