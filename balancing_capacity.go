@@ -257,17 +257,17 @@ func (s *market) GetIndividualoffersEnergybids(opt *Period) (*IndividualoffersEn
 }
 
 type GetMarginsDataOptions struct {
-	Date Time   `url:"date"`
+	Date Time  `url:"date"`
 	Sens string `url:"sens"`
 	Type string `url:"type"`
 }
 
 type MarginsDataResp []struct {
-	StartDate       string `json:"startDate"`
+	StartDate        string `json:"startDate"`
 	ComputationTime string `json:"computationTime"`
 	ProjectionTime  string `json:"projectionTime"`
-	MarginsData     []struct {
-		StudiedTime                       string `json:"studiedTime"`
+	MarginsData      []struct {
+		StudiedTime                      string `json:"studiedTime"`
 		ForecastedImbalanceRs             int    `json:"forecastedImbalanceRs"`
 		AvailableMarginsNormalUp          int    `json:"availableMarginsNormalUp"`
 		AvailableMarginsNormalDown        int    `json:"availableMarginsNormalDown"`

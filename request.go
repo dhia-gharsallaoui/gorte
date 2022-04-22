@@ -24,17 +24,14 @@ func URLGenerator(ur *url.URL, path string) (*url.URL, error) {
 }
 
 func (c *Client) NewRequest(method, path string, opt interface{}) (*retryablehttp.Request, error) {
-
 	u, err := URLGenerator(c.baseURL, path)
 	if err != nil {
 		return nil, err
 	}
-	// Create a request specific headers map.
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("Accept", "application/json")
 	auth := c.token.TokenType + " " + c.token.AccessToken
 	reqHeaders.Set("Authorization", auth)
-
 	var body interface{}
 	switch {
 	case method == http.MethodPost || method == http.MethodPut:
@@ -53,28 +50,22 @@ func (c *Client) NewRequest(method, path string, opt interface{}) (*retryablehtt
 		}
 		u.RawQuery = q.Encode()
 	}
-
 	req, err := retryablehttp.NewRequest(method, u.String(), body)
 	if err != nil {
 		return nil, err
 	}
-
-	// Set the request specific headers.
 	for k, v := range reqHeaders {
 		req.Header[k] = v
 	}
-
 	return req, nil
 }
 
 func (c *Client) Do(req *retryablehttp.Request, v interface{}) (*http.Response, error) {
-
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
-
 	if v != nil {
 		if w, ok := v.(io.Writer); ok {
 			_, err = io.Copy(w, resp.Body)

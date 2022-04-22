@@ -40,16 +40,15 @@ type Client struct {
 }
 
 func setURL(urlStr string) (*url.URL, error) {
-	// Make sure the given URL end with a slash
 	if !strings.HasSuffix(urlStr, "/") {
 		urlStr += "/"
 	}
 
-	URL, err := url.Parse(urlStr)
+	url, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err
 	}
-	return URL, nil
+	return url, nil
 }
 
 func NewClient(config ClientConfig) (*Client, error) {
@@ -89,7 +88,7 @@ func NewClient(config ClientConfig) (*Client, error) {
 	if err := json.Unmarshal(body, &token); err != nil {
 		return nil, err
 	} else {
-		log.Println("Client was successfully created !!!")
+		log.Println("client was successfully created!")
 	}
 	c.token = token
 	c.Market = &market{client: &c}
@@ -97,6 +96,5 @@ func NewClient(config ClientConfig) (*Client, error) {
 	c.Partners = &partners{client: &c}
 	c.Generation = &generation{client: &c}
 	c.Exchanges = &exchanges{client: &c}
-
 	return &c, nil
 }

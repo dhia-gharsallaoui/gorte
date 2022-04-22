@@ -141,7 +141,7 @@ import (
 )
 
 func main() {
-        key := "YmFiMWY3NjMtODhjZC00LWE5ZTgtOTRmMDc1ODcyYmNjOmU5YTIxNDVjLTBkOGUZi04YWI2LWRlNjRmODExM2M"
+        key := "YmFiMWY3NjMtODhjZC00OTViLWE5ZTgtOtNDdhZi04YWI2LWRlNjRm=="
         client, err := gorte.NewClient(gorte.ClientConfig{Key: key})
         layout := "2006-01-02 15:04"
         st, err := time.Parse(layout, "2022-03-01 23:00")
@@ -152,13 +152,17 @@ func main() {
         if err != nil {
                 fmt.Println(err)
         }
-        opt := gorte.Period{gorte.Time(st), gorte.Time(et)}
+        spew.Dump(st)
+        opt := gorte.Period{st, et}
+        spew.Dump(opt)
         signals, _, err := client.Market.GetSignals(&opt)
         if err != nil {
                 fmt.Println(err)
+        } else {
+                fmt.Println(signals)
         }
-        fmt.Println(signals)
 }
+
 
 ```
 
