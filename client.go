@@ -23,8 +23,8 @@ type AuthToken struct {
 }
 
 type ClientConfig struct {
-	Token   string
-	baseURL string `default:"https://digital.iservices.rte-france.com/"`
+	Key     string
+	BaseURL string `default:"https://digital.iservices.rte-france.com/"`
 }
 
 type Client struct {
@@ -58,12 +58,13 @@ func NewClient(config ClientConfig) (*Client, error) {
 	}
 	c := Client{}
 	var err error
-	if config.baseURL == "" {
-		c.baseURL, err = setURL(defaultBaseURL)
+	if config.BaseURL == "" {
+		config.BaseURL, err = setURL(defaultBaseURL)
 		if err != nil {
 			return nil, err
 		}
 	}
+	c.baseURL = config.BaseURL
 	c.config = config
 	c.client = retryablehttp.NewClient()
 	c.client.RetryMax = 10

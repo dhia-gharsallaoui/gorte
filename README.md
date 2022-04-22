@@ -34,7 +34,7 @@ Once logged, you can subscribe (create an application) to the desired API (each 
 Then to set up a client use the command 
 ```Go
 key:= "YmFiMWY3NjMtODhjZC00LWE5ZTgtOTRmMDc1ODcyYmNjOmU5YTIxNDVjLTBkOGUZi04YWI2LWRlNjRmODExM2M"
-client, err := gorte.NewClient(gorte.ClientConfig{Token: key})
+client, err := gorte.NewClient(gorte.ClientConfig{Key: key})
 ```
 > NB: the token generated with your key is only valid for two hours. So you need to recreated the client each two hours using the same key.
 
@@ -142,7 +142,7 @@ import (
 
 func main() {
         key := "YmFiMWY3NjMtODhjZC00LWE5ZTgtOTRmMDc1ODcyYmNjOmU5YTIxNDVjLTBkOGUZi04YWI2LWRlNjRmODExM2M"
-        client, err := gorte.NewClient(gorte.ClientConfig{Token: key})
+        client, err := gorte.NewClient(gorte.ClientConfig{Key: key})
         layout := "2006-01-02 15:04"
         st, err := time.Parse(layout, "2022-03-01 23:00")
         if err != nil {
