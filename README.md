@@ -23,7 +23,7 @@ $ go get -u github.com/dhia-gharsallaoui/go-rte
 
 Add this import line to the file you're working in:
 ```Go
-import "github.com/dhia-gharsallaoui/go-rte
+import "github.com/dhia-gharsallaoui/go-rte"
 ```
 
 
