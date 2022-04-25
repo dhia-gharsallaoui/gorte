@@ -11,14 +11,14 @@ type SignalValue struct {
 	Value       bool      `json:"value"`
 	UpdatedDate time.Time `json:"updated_date"`
 }
-
+type Signal []struct {
+	StartDate time.Time     `json:"start_date"`
+	EndDate   time.Time     `json:"end_date"`
+	Type      string        `json:"type"`
+	Values    []SignalValue `json:"values"`
+}
 type Signals struct {
-	Signal []struct {
-		StartDate time.Time     `json:"start_date"`
-		EndDate   time.Time     `json:"end_date"`
-		Type      string        `json:"type"`
-		Values    []SignalValue `json:"values"`
-	} `json:"signals"`
+	Signal `json:"signals"`
 }
 
 func (s *market) GetSignals(opt *Period) (*Signals, *http.Response, error) {
