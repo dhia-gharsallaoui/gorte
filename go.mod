@@ -1,4 +1,4 @@
-module gorte
+module github.com/dhia-gharsallaoui/gorte
 
 go 1.16
 
