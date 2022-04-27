@@ -25,11 +25,13 @@ func (s *market) GetSignals(opt *Period) (*Signals, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/signal/v1/signals", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	sig := &Signals{}
 	resp, err := c.Do(req, sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err

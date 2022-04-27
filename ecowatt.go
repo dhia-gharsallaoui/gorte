@@ -30,11 +30,13 @@ func (co *consumption) GetSignalEcowatt(opt *Period) (*SignalEcowatt, *http.Resp
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/ecowatt/v3/signals", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *SignalEcowatt
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err

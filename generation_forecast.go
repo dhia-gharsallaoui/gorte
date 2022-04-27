@@ -32,11 +32,13 @@ func (s *generation) GetForecasts(opt *GetForecastsOptions) (*ForecastsResp, *ht
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/generation_forecast/v2/forecasts", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	sig := &ForecastsResp{}
 	resp, err := c.Do(req, sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err

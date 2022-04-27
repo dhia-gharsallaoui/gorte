@@ -36,11 +36,13 @@ func (co *consumption) GetQualityData(opt *GetQualityDataOptions) (*QualityDataR
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "private_api/electricity_quality/v1/quality_data", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *QualityDataResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err

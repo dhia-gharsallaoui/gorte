@@ -23,11 +23,13 @@ func (co *consumption) GetOperators(opt *Period) (*OperatorsResp, *http.Response
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/demand_response/v1/operators", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	sig := &OperatorsResp{}
 	resp, err := c.Do(req, sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -50,11 +52,13 @@ func (co *consumption) GetVolumes(opt *Period) (*VolumesResp, *http.Response, er
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/demand_response/v1/volumes", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	sig := &VolumesResp{}
 	resp, err := c.Do(req, sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err

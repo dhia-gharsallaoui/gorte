@@ -24,11 +24,13 @@ func (s *market) GetAcceptedOffers(opt *Period) (*AcceptedOffersResp, *http.Resp
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "/open_api/balancing_capacity/v4/accepted_offers", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *AcceptedOffersResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -54,11 +56,13 @@ func (s *market) GetProcuredReservesResp(opt *Period) (*ProcuredReservesResp, *h
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "/open_api/balancing_capacity/v4/procured_reserves", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *ProcuredReservesResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -108,11 +112,13 @@ func (s *market) GetPeakDailyMargins(opt *Period) (*PeakDailyMarginsResp, *http.
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/peak_daily_margins", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *PeakDailyMarginsResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -137,11 +143,13 @@ func (s *market) GetInsufficientsOffers(opt *Period) (*InsufficientsOffersResp, 
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/insufficients_offers", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *InsufficientsOffersResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -164,11 +172,13 @@ func (s *market) GetImbalance(opt *Period) (*ImbalanceResp, *http.Response, erro
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/imbalance", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *ImbalanceResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -209,11 +219,13 @@ func (s *market) GetAggregatedoffersEnergybids(opt *Period) (*AggregatedoffersEn
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/aggregatedoffers_energybids", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *AggregatedoffersEnergybidsResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -246,28 +258,30 @@ func (s *market) GetIndividualoffersEnergybids(opt *Period) (*IndividualoffersEn
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/individualoffers_energybids", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *IndividualoffersEnergybidsResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
 }
 
 type GetMarginsDataOptions struct {
-	Date Time  `url:"date"`
+	Date Time   `url:"date"`
 	Sens string `url:"sens"`
 	Type string `url:"type"`
 }
 
 type MarginsDataResp []struct {
-	StartDate        string `json:"startDate"`
+	StartDate       string `json:"startDate"`
 	ComputationTime string `json:"computationTime"`
 	ProjectionTime  string `json:"projectionTime"`
-	MarginsData      []struct {
-		StudiedTime                      string `json:"studiedTime"`
+	MarginsData     []struct {
+		StudiedTime                       string `json:"studiedTime"`
 		ForecastedImbalanceRs             int    `json:"forecastedImbalanceRs"`
 		AvailableMarginsNormalUp          int    `json:"availableMarginsNormalUp"`
 		AvailableMarginsNormalDown        int    `json:"availableMarginsNormalDown"`
@@ -284,11 +298,13 @@ func (s *market) GetMarginsData(opt *GetMarginsDataOptions) (*MarginsDataResp, *
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/individualoffers_energybids", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *MarginsDataResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -307,11 +323,13 @@ func (s *market) GetDailyProcuredReserves(opt *Period) (*DailyProcuredReservesRe
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/daily_procured_reserves", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *DailyProcuredReservesResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -331,11 +349,13 @@ func (s *market) GetNeeds(opt *Period) (*NeedsResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/tso_need_for_procured_reserves", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *NeedsResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -364,11 +384,13 @@ func (s *market) GetAggregatedoffersAFRREnergybids(opt *Period) (*Aggregatedoffe
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/aggregatedoffers_afrr_energybids", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *AggregatedoffersAFRREnergybidsResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err

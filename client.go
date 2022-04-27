@@ -2,9 +2,7 @@ package gorte
 
 import (
 	"encoding/json"
-	"errors"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -23,11 +21,13 @@ type AuthToken struct {
 }
 
 type ClientConfig struct {
+	Logger  Logger
 	Key     string
 	BaseURL string `default:"https://digital.iservices.rte-france.com/"`
 }
 
 type Client struct {
+	logger      Logger
 	client      *retryablehttp.Client
 	baseURL     *url.URL
 	config      ClientConfig
@@ -52,10 +52,18 @@ func setURL(urlStr string) (*url.URL, error) {
 }
 
 func NewClient(config ClientConfig) (*Client, error) {
-	if config.Key == "" {
-		return nil, errors.New("can't connect without the RTE token in Base 64 format. to get one subscribe to the API")
+	var logger Logger
+	if config.Logger != nil {
+		logger = config.Logger
+	} else {
+		logger = NewLogger(&LoggerConfiguration{
+			Verbosity: Warn,
+		})
 	}
-	c := Client{}
+	if config.Key == "" {
+		logger.Fatal("can't connect without the RTE token in Base 64 format. to get one subscribe to the API")
+	}
+	c := Client{logger: logger}
 	var err error
 	if config.BaseURL == "" {
 		config.BaseURL = defaultBaseURL
@@ -88,7 +96,7 @@ func NewClient(config ClientConfig) (*Client, error) {
 	if err := json.Unmarshal(body, &token); err != nil {
 		return nil, err
 	} else {
-		log.Println("client was successfully created!")
+		logger.Info("client was successfully created!")
 	}
 	c.token = token
 	c.Market = &market{client: &c}

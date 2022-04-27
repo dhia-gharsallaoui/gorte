@@ -27,11 +27,13 @@ func (co *consumption) GetAnnualForecasts(opt *Period) (*AnnualForecastsResp, *h
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/consumption/v1/annual_forecasts", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *AnnualForecastsResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -60,11 +62,13 @@ func (co *consumption) GetWeeklyForecasts(opt *Period) (*WeeklyForecastsResp, *h
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/consumption/v1/weekly_forecasts", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *WeeklyForecastsResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
@@ -88,11 +92,13 @@ func (co *consumption) GetShortTerm(opt *Period) (*ShortTermResp, *http.Response
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/consumption/v1/short_term", opt)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
 	var sig *ShortTermResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
+		c.logger.Err(err.Error())
 		return nil, resp, err
 	}
 	return sig, resp, err
