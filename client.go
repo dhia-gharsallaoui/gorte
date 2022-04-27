@@ -74,6 +74,7 @@ func NewClient(config ClientConfig) (*Client, error) {
 	}
 	c.config = config
 	c.client = retryablehttp.NewClient()
+	c.client.Logger = newLeveledLogger(logger)
 	c.client.RetryMax = 10
 	authURL, err := URLGenerator(c.baseURL, "token/oauth/")
 	if err != nil {

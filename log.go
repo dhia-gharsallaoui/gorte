@@ -39,3 +39,31 @@ func GetVerbosityFromString(verbosity string) int {
 		return Warn
 	}
 }
+
+type LeveledLogger interface {
+	Error(msg string, keysAndValues ...interface{})
+	Info(msg string, keysAndValues ...interface{})
+	Debug(msg string, keysAndValues ...interface{})
+	Warn(msg string, keysAndValues ...interface{})
+}
+
+func newLeveledLogger(l Logger) LeveledLogger {
+	return &logger{l: l}
+}
+
+type logger struct {
+	l Logger
+}
+
+func (l *logger) Error(msg string, keysAndValues ...interface{}) {
+	l.l.Err(msg, keysAndValues)
+}
+func (l *logger) Info(msg string, keysAndValues ...interface{}) {
+	l.l.Info(msg, keysAndValues)
+}
+func (l *logger) Debug(msg string, keysAndValues ...interface{}) {
+	l.l.Debug(msg, keysAndValues)
+}
+func (l *logger) Warn(msg string, keysAndValues ...interface{}) {
+	l.l.Warn(msg, keysAndValues)
+}
