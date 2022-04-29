@@ -2,10 +2,10 @@
 
 An RTE API client enabling Go programs to interact with RTE API in a simple and uniform way.
 
-[![GitHub license](https://img.shields.io/github/license/dhia-gharsallaoui/go-rte.svg?)](https://github.com/dhia-gharsallaoui/go-rte/blob/main/LICENSE)
-[![GoDoc](https://godoc.org/github.com/dhia-gharsallaoui/go-rte?status.svg)](https://pkg.go.dev/github.com/dhia-gharsallaoui/go-rte?tab=doc)
-[![Go Report Card](https://goreportcard.com/badge/github.com/dhia-gharsallaoui/go-odoo)](https://goreportcard.com/report/github.com/dhia-gharsallaoui/go-rte)
-[![GitHub issues](https://img.shields.io/github/issues/dhia-gharsallaoui/go-rte.svg)](https://github.com/dhia-gharsallaoui/go-rte/issues)
+[![GitHub license](https://img.shields.io/github/license/dhia-gharsallaoui/gorte.svg?)](https://github.com/dhia-gharsallaoui/gorte/blob/main/LICENSE)
+[![GoDoc](https://godoc.org/github.com/dhia-gharsallaoui/gorte?status.svg)](https://pkg.go.dev/github.com/dhia-gharsallaoui/gorte?tab=doc)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dhia-gharsallaoui/gorte)](https://goreportcard.com/report/github.com/dhia-gharsallaoui/gorte)
+[![GitHub issues](https://img.shields.io/github/issues/dhia-gharsallaoui/gorte.svg)](https://github.com/dhia-gharsallaoui/gorte/issues)
 
 ## Overview
 RTE, the french electricity transmission system operator, provides
