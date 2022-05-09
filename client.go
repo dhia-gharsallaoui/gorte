@@ -89,20 +89,20 @@ func NewClient(config ClientConfig) (*Client, error) {
 	c.Partners = &partners{client: &c}
 	c.Generation = &generation{client: &c}
 	c.Exchanges = &exchanges{client: &c}
-	logger.Info("client was successfully created!")
+	logger.Debug("client was successfully created!")
 	return &c, nil
 }
 
 func (c *Client) authenticate(req *retryablehttp.Request) error {
-	token := c.token
 	if time.Now().After(c.token.ExpiryDate) {
-		token, err := c.newToken()
+		var err error
+		c.token, err = c.newToken()
 		if err != nil {
 			return err
 		}
-		c.token = token
+		c.logger.Debug(fmt.Sprintf("New token generated! expires at %s", c.token.ExpiryDate.Format("2006-01-02 15:04:05")))
 	}
-	req.Header.Set("Authorization", token.TokenType+" "+token.AccessToken)
+	req.Header.Set("Authorization", c.token.TokenType+" "+c.token.AccessToken)
 	return nil
 }
 
@@ -129,6 +129,6 @@ func (c *Client) newToken() (*AuthToken, error) {
 		return nil, err
 	}
 	token.ExpiryDate = time.Now().Add(time.Duration(token.ExpiresIn) * time.Second)
-	c.logger.Info(fmt.Sprintf("token was successfully generated! expires in %s", token.ExpiryDate.Format("2006-01-02 15:04:05")))
+	c.logger.Debug(fmt.Sprintf("token was successfully generated! expires in %s", token.ExpiryDate.Format("2006-01-02 15:04:05")))
 	return &token, nil
 }
