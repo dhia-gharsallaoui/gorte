@@ -89,7 +89,7 @@ func NewClient(config ClientConfig) (*Client, error) {
 	c.Partners = &partners{client: &c}
 	c.Generation = &generation{client: &c}
 	c.Exchanges = &exchanges{client: &c}
-	logger.Debug("client was successfully created!")
+	logger.Info("client was successfully created!")
 	return &c, nil
 }
 
@@ -100,7 +100,7 @@ func (c *Client) authenticate(req *retryablehttp.Request) error {
 		if err != nil {
 			return err
 		}
-		c.logger.Debug(fmt.Sprintf("New token generated! expires at %s", c.token.ExpiryDate.Format("2006-01-02 15:04:05")))
+		c.logger.Info(fmt.Sprintf("New token generated! expires at %s", c.token.ExpiryDate.Format("2006-01-02 15:04:05")))
 	}
 	req.Header.Set("Authorization", c.token.TokenType+" "+c.token.AccessToken)
 	return nil
