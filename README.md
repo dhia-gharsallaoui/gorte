@@ -152,9 +152,7 @@ func main() {
         if err != nil {
                 fmt.Println(err)
         }
-        spew.Dump(st)
         opt := gorte.Period{st, et}
-        spew.Dump(opt)
         signals, _, err := client.Market.GetSignals(&opt)
         if err != nil {
                 fmt.Println(err)
