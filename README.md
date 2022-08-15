@@ -1,4 +1,4 @@
-# go-rte
+# gorte
 
 An RTE API client enabling Go programs to interact with RTE API in a simple and uniform way.
 
@@ -11,19 +11,19 @@ An RTE API client enabling Go programs to interact with RTE API in a simple and 
 RTE, the french electricity transmission system operator, provides
 access to various data through an API on its [data
 portal](https://data.rte-france.com/home). You can retrieve those data
-with `go-rte`.
+with `gorte`.
 
 
 ## Installation
 
 ```bash
-$ go get -u github.com/dhia-gharsallaoui/go-rte
+$ go get -u github.com/dhia-gharsallaoui/gorte
 ```
 ## Quick Start
 
 Add this import line to the file you're working in:
 ```Go
-import "github.com/dhia-gharsallaoui/go-rte"
+import "github.com/dhia-gharsallaoui/gorte"
 ```
 
 
@@ -137,8 +137,8 @@ import (
         "fmt"
         "time"
 
-        gorte "github.com/dhia-gharsallaoui/go-rte"
-        "github.com/dhia-gharsallaoui/go-rte/utils"
+        gorte "github.com/dhia-gharsallaoui/gorte"
+        "github.com/dhia-gharsallaoui/gorte/utils"
 )
 
 func main() {
@@ -173,7 +173,7 @@ func main() {
 
 ## Issues
 
-- If you have an issue, please report it on the [issue tracker](https://github.com/dhia-gharsallaoui/go-rte/issues)
+- If you have an issue, please report it on the [issue tracker](https://github.com/dhia-gharsallaoui/gorte/issues)
 
 ## Sponsored by 
   [Skilld](https://www.skilld.cloud/)
