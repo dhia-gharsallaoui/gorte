@@ -3,6 +3,8 @@ package gorte
 import (
 	"net/http"
 	"time"
+
+	"github.com/dhia-gharsallaoui/gorte/utils"
 )
 
 type AcceptedOffersResp struct {
@@ -20,7 +22,7 @@ type AcceptedOffersResp struct {
 	} `json:"accepted_offers"`
 }
 
-func (s *market) GetAcceptedOffers(opt *Period) (*AcceptedOffersResp, *http.Response, error) {
+func (s *market) GetAcceptedOffers(opt *utils.Period) (*AcceptedOffersResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "/open_api/balancing_capacity/v4/accepted_offers", opt)
 	if err != nil {
@@ -52,7 +54,7 @@ type ProcuredReservesResp struct {
 	} `json:"procured_reserves"`
 }
 
-func (s *market) GetProcuredReservesResp(opt *Period) (*ProcuredReservesResp, *http.Response, error) {
+func (s *market) GetProcuredReservesResp(opt *utils.Period) (*ProcuredReservesResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "/open_api/balancing_capacity/v4/procured_reserves", opt)
 	if err != nil {
@@ -108,7 +110,7 @@ type PeakDailyMarginsResp struct {
 	} `json:"peak_daily_margins"`
 }
 
-func (s *market) GetPeakDailyMargins(opt *Period) (*PeakDailyMarginsResp, *http.Response, error) {
+func (s *market) GetPeakDailyMargins(opt *utils.Period) (*PeakDailyMarginsResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/peak_daily_margins", opt)
 	if err != nil {
@@ -139,7 +141,7 @@ type InsufficientsOffersResp struct {
 	} `json:"insufficients_offers"`
 }
 
-func (s *market) GetInsufficientsOffers(opt *Period) (*InsufficientsOffersResp, *http.Response, error) {
+func (s *market) GetInsufficientsOffers(opt *utils.Period) (*InsufficientsOffersResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/insufficients_offers", opt)
 	if err != nil {
@@ -168,7 +170,7 @@ type ImbalanceResp struct {
 	} `json:"imbalance"`
 }
 
-func (s *market) GetImbalance(opt *Period) (*ImbalanceResp, *http.Response, error) {
+func (s *market) GetImbalance(opt *utils.Period) (*ImbalanceResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/imbalance", opt)
 	if err != nil {
@@ -215,7 +217,7 @@ type AggregatedoffersEnergybidsResp struct {
 	} `json:"aggregatedoffers_energybids"`
 }
 
-func (s *market) GetAggregatedoffersEnergybids(opt *Period) (*AggregatedoffersEnergybidsResp, *http.Response, error) {
+func (s *market) GetAggregatedoffersEnergybids(opt *utils.Period) (*AggregatedoffersEnergybidsResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/aggregatedoffers_energybids", opt)
 	if err != nil {
@@ -254,7 +256,7 @@ type IndividualoffersEnergybidsResp struct {
 	} `json:"individualoffers_energybids"`
 }
 
-func (s *market) GetIndividualoffersEnergybids(opt *Period) (*IndividualoffersEnergybidsResp, *http.Response, error) {
+func (s *market) GetIndividualoffersEnergybids(opt *utils.Period) (*IndividualoffersEnergybidsResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/individualoffers_energybids", opt)
 	if err != nil {
@@ -271,9 +273,9 @@ func (s *market) GetIndividualoffersEnergybids(opt *Period) (*IndividualoffersEn
 }
 
 type GetMarginsDataOptions struct {
-	Date Time   `url:"date"`
-	Sens string `url:"sens"`
-	Type string `url:"type"`
+	Date utils.Time `url:"date"`
+	Sens string     `url:"sens"`
+	Type string     `url:"type"`
 }
 
 type MarginsDataResp []struct {
@@ -319,7 +321,7 @@ type DailyProcuredReservesResp struct {
 	} `json:"daily_procured_reserves"`
 }
 
-func (s *market) GetDailyProcuredReserves(opt *Period) (*DailyProcuredReservesResp, *http.Response, error) {
+func (s *market) GetDailyProcuredReserves(opt *utils.Period) (*DailyProcuredReservesResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/daily_procured_reserves", opt)
 	if err != nil {
@@ -345,7 +347,7 @@ type NeedsResp struct {
 	} `json:"needs"`
 }
 
-func (s *market) GetNeeds(opt *Period) (*NeedsResp, *http.Response, error) {
+func (s *market) GetNeeds(opt *utils.Period) (*NeedsResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/tso_need_for_procured_reserves", opt)
 	if err != nil {
@@ -380,7 +382,7 @@ type AggregatedoffersAFRREnergybidsResp struct {
 	} `json:"aggregatedoffers_aFRR_energybids"`
 }
 
-func (s *market) GetAggregatedoffersAFRREnergybids(opt *Period) (*AggregatedoffersAFRREnergybidsResp, *http.Response, error) {
+func (s *market) GetAggregatedoffersAFRREnergybids(opt *utils.Period) (*AggregatedoffersAFRREnergybidsResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/balancing_capacity/v4/aggregatedoffers_afrr_energybids", opt)
 	if err != nil {

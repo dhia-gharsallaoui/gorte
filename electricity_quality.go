@@ -3,6 +3,8 @@ package gorte
 import (
 	"net/http"
 	"time"
+
+	"github.com/dhia-gharsallaoui/gorte/utils"
 )
 
 type QualityDataResp struct {
@@ -26,10 +28,10 @@ type QualityDataResp struct {
 }
 
 type GetQualityDataOptions struct {
-	Id        int    `url:"quality_meter_point_id"`
-	StartDate Time   `url:"start_date"`
-	EndDate   Time   `url:"end_date"`
-	Type      string `url:"data_type"`
+	ID        int        `url:"quality_meter_point_id"`
+	StartDate utils.Time `url:"start_date"`
+	EndDate   utils.Time `url:"end_date"`
+	Type      string     `url:"data_type"`
 }
 
 func (co *consumption) GetQualityData(opt *GetQualityDataOptions) (*QualityDataResp, *http.Response, error) {

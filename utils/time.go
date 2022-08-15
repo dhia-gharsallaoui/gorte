@@ -1,4 +1,4 @@
-package gorte
+package utils
 
 import (
 	"net/url"

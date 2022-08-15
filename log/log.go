@@ -1,4 +1,4 @@
-package gorte
+package log
 
 const (
 	Debug = iota

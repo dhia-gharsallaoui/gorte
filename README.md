@@ -51,7 +51,7 @@ et, err := time.Parse(layout, "2022-03-09 13:00")
 if err != nil {
   fmt.Println(err)
   }
-opt := Period{Time(st), Time(et)}
+opt := utils.Period{Time(st), Time(et)}
 
 ```
 After preparing our configuration we can call an API from the available categories.
@@ -138,6 +138,7 @@ import (
         "time"
 
         gorte "github.com/dhia-gharsallaoui/go-rte"
+        "github.com/dhia-gharsallaoui/go-rte/utils"
 )
 
 func main() {
@@ -152,7 +153,7 @@ func main() {
         if err != nil {
                 fmt.Println(err)
         }
-        opt := gorte.Period{st, et}
+        opt := utils.Period{st, et}
         signals, _, err := client.Market.GetSignals(&opt)
         if err != nil {
                 fmt.Println(err)
@@ -176,4 +177,3 @@ func main() {
 
 ## Sponsored by 
   [Skilld](https://www.skilld.cloud/)
-

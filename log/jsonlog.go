@@ -1,4 +1,4 @@
-package gorte
+package log
 
 import (
 	gofmt "fmt"

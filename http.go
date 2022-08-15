@@ -16,7 +16,6 @@ func URLGenerator(ur *url.URL, path string) (*url.URL, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	// Set the encoded path data
 	u.RawPath = u.Path + path
 	u.Path = u.Path + unescaped
@@ -49,7 +48,6 @@ func (c *Client) NewRequest(method, path string, opt interface{}) (*retryablehtt
 		u.RawQuery = q.Encode()
 	}
 	req, err := retryablehttp.NewRequest(method, u.String(), body)
-
 	if err != nil {
 		return nil, err
 	}
@@ -76,6 +74,5 @@ func (c *Client) Do(req *retryablehttp.Request, v interface{}) (*http.Response, 
 			err = json.NewDecoder(resp.Body).Decode(v)
 		}
 	}
-
 	return resp, err
 }

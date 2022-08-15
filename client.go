@@ -1,14 +1,10 @@
 package gorte
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"net/http"
 	"net/url"
 	"strings"
-	"time"
 
+	"github.com/dhia-gharsallaoui/gorte/log"
 	"github.com/hashicorp/go-retryablehttp"
 )
 
@@ -16,21 +12,14 @@ const (
 	defaultBaseURL = "https://digital.iservices.rte-france.com/"
 )
 
-type AuthToken struct {
-	AccessToken string `json:"access_token"`
-	TokenType   string `json:"token_type"`
-	ExpiresIn   int    `json:"expires_in"`
-	ExpiryDate  time.Time
-}
-
 type ClientConfig struct {
-	Logger  Logger
+	Logger  log.Logger
 	Key     string
 	BaseURL string `default:"https://digital.iservices.rte-france.com/"`
 }
 
 type Client struct {
-	logger      Logger
+	logger      log.Logger
 	client      *retryablehttp.Client
 	baseURL     *url.URL
 	config      ClientConfig
@@ -42,25 +31,13 @@ type Client struct {
 	Exchanges   *exchanges
 }
 
-func setURL(urlStr string) (*url.URL, error) {
-	if !strings.HasSuffix(urlStr, "/") {
-		urlStr += "/"
-	}
-
-	url, err := url.Parse(urlStr)
-	if err != nil {
-		return nil, err
-	}
-	return url, nil
-}
-
 func NewClient(config ClientConfig) (*Client, error) {
-	var logger Logger
+	var logger log.Logger
 	if config.Logger != nil {
 		logger = config.Logger
 	} else {
-		logger = NewLogger(&LoggerConfiguration{
-			Verbosity: Debug,
+		logger = log.NewLogger(&log.LoggerConfiguration{
+			Verbosity: log.Debug,
 		})
 	}
 	if config.Key == "" {
@@ -77,7 +54,7 @@ func NewClient(config ClientConfig) (*Client, error) {
 	}
 	c.config = config
 	c.client = retryablehttp.NewClient()
-	c.client.Logger = NewHTTPLogger(logger)
+	c.client.Logger = log.NewHTTPLogger(logger)
 	c.client.RetryMax = 10
 	token, err := c.newToken()
 	if err != nil {
@@ -93,42 +70,14 @@ func NewClient(config ClientConfig) (*Client, error) {
 	return &c, nil
 }
 
-func (c *Client) authenticate(req *retryablehttp.Request) error {
-	if time.Now().After(c.token.ExpiryDate) {
-		var err error
-		c.token, err = c.newToken()
-		if err != nil {
-			return err
-		}
-		c.logger.Info(fmt.Sprintf("New token generated! expires at %s", c.token.ExpiryDate.Format("2006-01-02 15:04:05")))
+func setURL(urlStr string) (*url.URL, error) {
+	if !strings.HasSuffix(urlStr, "/") {
+		urlStr += "/"
 	}
-	req.Header.Set("Authorization", c.token.TokenType+" "+c.token.AccessToken)
-	return nil
-}
 
-func (c *Client) newToken() (*AuthToken, error) {
-	authURL, err := URLGenerator(c.baseURL, "token/oauth/")
+	url, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err
 	}
-	req, err := http.NewRequest("POST", authURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Basic "+c.config.Key)
-	resp, err := c.client.HTTPClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	var token AuthToken
-	if err := json.Unmarshal(body, &token); err != nil {
-		return nil, err
-	}
-	token.ExpiryDate = time.Now().Add(time.Duration(token.ExpiresIn) * time.Second)
-	c.logger.Debug(fmt.Sprintf("token was successfully generated! expires in %s", token.ExpiryDate.Format("2006-01-02 15:04:05")))
-	return &token, nil
+	return url, nil
 }

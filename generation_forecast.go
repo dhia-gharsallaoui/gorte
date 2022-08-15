@@ -3,6 +3,8 @@ package gorte
 import (
 	"net/http"
 	"time"
+
+	"github.com/dhia-gharsallaoui/gorte/utils"
 )
 
 type ForecastsResp struct {
@@ -22,10 +24,10 @@ type ForecastsResp struct {
 }
 
 type GetForecastsOptions struct {
-	StartDate Time   `url:"start_date"`
-	EndDate   Time   `url:"end_date"`
-	ProdType  string `url:"production_type"`
-	Type      string `url:"type"`
+	StartDate utils.Time `url:"start_date"`
+	EndDate   utils.Time `url:"end_date"`
+	ProdType  string     `url:"production_type"`
+	Type      string     `url:"type"`
 }
 
 func (s *generation) GetForecasts(opt *GetForecastsOptions) (*ForecastsResp, *http.Response, error) {

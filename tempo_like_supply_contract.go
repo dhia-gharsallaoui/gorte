@@ -3,6 +3,8 @@ package gorte
 import (
 	"net/http"
 	"time"
+
+	"github.com/dhia-gharsallaoui/gorte/utils"
 )
 
 type TempoLikeCalendarsResp struct {
@@ -18,7 +20,7 @@ type TempoLikeCalendarsResp struct {
 	} `json:"tempo_like_calendars"`
 }
 
-func (co *consumption) GetTempoLikeCalendars(opt *Period) (*TempoLikeCalendarsResp, *http.Response, error) {
+func (co *consumption) GetTempoLikeCalendars(opt *utils.Period) (*TempoLikeCalendarsResp, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/tempo_like_supply_contract/v1/tempo_like_calendars", opt)
 	if err != nil {
