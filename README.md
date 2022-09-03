@@ -1,6 +1,6 @@
 # gorte
 
-An RTE API client enabling Go programs to interact with RTE API in a simple and uniform way.
+An RTE API client enabling Go programs to interact with RTE APIs in a simple and uniform way.
 
 [![GitHub license](https://img.shields.io/github/license/dhia-gharsallaoui/gorte.svg?)](https://github.com/dhia-gharsallaoui/gorte/blob/main/LICENSE)
 [![GoDoc](https://godoc.org/github.com/dhia-gharsallaoui/gorte?status.svg)](https://pkg.go.dev/github.com/dhia-gharsallaoui/gorte?tab=doc)
@@ -36,29 +36,28 @@ Then to set up a client use the command
 key:= "YmFiMWY3NjMtODhjZC00LWE5ZTgtOTRmMDc1ODcyYmNjOmU5YTIxNDVjLTBkOGUZi04YWI2LWRlNjRmODExM2M"
 client, err := gorte.NewClient(gorte.ClientConfig{Key: key})
 ```
-> NB: the token generated with your key is only valid for two hours. So you need to recreated the client each two hours using the same key.
 
 ### Usage
 The package came with a useful struct called `Period` for calling API's with `start date` and `end date` configuration. this struct ensure the coding of the time in the suitable format.
 
 ```Go
 layout := "2006-01-02 15:04"
-st, err := time.Parse(layout, "2022-03-01 23:00")
+sd, err := time.Parse(layout, "2022-03-01 23:00")
 if err != nil {
   fmt.Println(err)
   }
-et, err := time.Parse(layout, "2022-03-09 13:00")
+ed, err := time.Parse(layout, "2022-03-09 13:00")
 if err != nil {
   fmt.Println(err)
   }
-opt := utils.Period{Time(st), Time(et)}
+opt := utils.Period{StartDate: sd, EndDate: ed}
 
 ```
 After preparing our configuration we can call an API from the available categories.
 
 For exemple to get the "Peak Period" signals from `2022-03-01 23:00` to `2022-03-09 13:00`.
 ```Go
-signals, _, err := Client.Market.GetSignals(&opt)
+signals, _, err := Client.Market.GetSignals(opt)
 ```
 
 ### Available APIs
@@ -67,14 +66,14 @@ signals, _, err := Client.Market.GetSignals(&opt)
 - [ ] [Consolidated Consumption](https://data.rte-france.com/catalog/-/api/consumption/Consolidated-Consumption/v1.0)
 - [x] [Consumption](https://data.rte-france.com/catalog/-/api/consumption/Consumption/v1.2)
 ```Go
-client.Consumption.GetAnnualForecasts(&opt)
-client.Consumption.GetShortTerm(&opt)
-client.Consumption.GetWeeklyForecasts(&opt)
+client.Consumption.GetAnnualForecasts(opt)
+client.Consumption.GetShortTerm(opt)
+client.Consumption.GetWeeklyForecasts(opt)
 ```
 - [x] [Demand Response](https://data.rte-france.com/catalog/-/api/consumption/Demand-Response/v1.0)
 ```Go
-client.Consumption.GetOperators(&opt)
-client.Consumption.GetVolumes(&opt)
+client.Consumption.GetOperators(opt)
+client.Consumption.GetVolumes(opt)
 ```
 - [x] [Electricity Quality](https://data.rte-france.com/catalog/-/api/consumption/Electricity-Quality/v1.0)
 ```Go
@@ -87,11 +86,11 @@ client.Consumption.GetQualityData(gorte.GetQualityDataOptions{
 ```
 - [x] [Ecowatt](https://data.rte-france.com/catalog/-/api/consumption/Ecowatt/v3.0)
 ```Go
-client.Consumption.GetSignalEcowatt(&opt)
+client.Consumption.GetSignalEcowatt(opt)
 ```
 - [x] [Tempo Like Supply Contract](https://data.rte-france.com/catalog/-/api/consumption/Tempo-Like-Supply-Contract/v1.1)
 ```Go 
-client.Consumption.GetTempoLikeCalendars(&opt)
+client.Consumption.GetTempoLikeCalendars(opt)
 ```
 #### Exchanges
 > Not implemented yet.
@@ -105,24 +104,24 @@ client.Consumption.GetTempoLikeCalendars(&opt)
 #### Market
 - [x] [Balancing Capacity](https://data.rte-france.com/catalog/-/api/market/Balancing-Capacity/v4.1) 
 ```Go
-client.Market.GetAcceptedOffers(&opt)
-client.Market.GetAggregatedoffersAFRREnergybids(&opt)
-client.Market.GetAggregatedoffersEnergybids(&opt)
-client.Market.GetDailyProcuredReserves(&opt)
-client.Market.GetImbalance(&opt)
-client.Market.GetIndividualoffersEnergybids(&opt)
-client.Market.GetInsufficientsOffers(&opt)
-client.Market.GetMarginsData(&opt)
-client.Market.GetNeeds(&opt)
-client.Market.GetPeakDailyMargins(&opt)
-client.Market.GetProcuredReservesResp(&opt)
+client.Market.GetAcceptedOffers(opt)
+client.Market.GetAggregatedoffersAFRREnergybids(opt)
+client.Market.GetAggregatedoffersEnergybids(opt)
+client.Market.GetDailyProcuredReserves(opt)
+client.Market.GetImbalance(opt)
+client.Market.GetIndividualoffersEnergybids(opt)
+client.Market.GetInsufficientsOffers(opt)
+client.Market.GetMarginsData(opt)
+client.Market.GetNeeds(opt)
+client.Market.GetPeakDailyMargins(opt)
+client.Market.GetProcuredReservesResp(opt)
 ```
 - [ ] [Balancing Energy](https://data.rte-france.com/catalog/-/api/market/Balancing-Energy/v1.2)
 - [ ] [Bre Referential](https://data.rte-france.com/catalog/-/api/market/Bre-Referential/v1.0)
 - [x] [Demand Response Signal](https://data.rte-france.com/catalog/-/api/market/Demand-Response-Signal/v1.0)
 ```Go                           
-client.Market.GetOperators(&opt)
-client.Market.GetVolumes(&opt) 
+client.Market.GetOperators(opt)
+client.Market.GetVolumes(opt) 
 ```
 - [x] [Wholesale Market](https://data.rte-france.com/catalog/-/api/market/Wholesale-Market/v2.0)
 
