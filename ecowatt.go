@@ -3,34 +3,24 @@ package gorte
 import (
 	"net/http"
 	"time"
-
-	"github.com/dhia-gharsallaoui/gorte/utils"
 )
 
 type SignalEcowatt struct {
 	Signals []struct {
-		StartDate time.Time `json:"start_date"`
-		EndDate   time.Time `json:"end_date"`
-		Values    struct {
-			Pdl []string `json:"PDL"`
-			Hdf []string `json:"HDF"`
-			Naq []string `json:"NAQ"`
-			Bfc []string `json:"BFC"`
-			Bre []string `json:"BRE"`
-			Pac []string `json:"PAC"`
-			Ara []string `json:"ARA"`
-			Occ []string `json:"OCC"`
-			Nor []string `json:"NOR"`
-			Idf []string `json:"IDF"`
-			Cvl []string `json:"CVL"`
-			Ges []string `json:"GES"`
+		GenerationFichier time.Time `json:"GenerationFichier"`
+		Jour              time.Time `json:"jour"`
+		Dvalue            int       `json:"dvalue"`
+		Message           string    `json:"message"`
+		Values            []struct {
+			Pas    int `json:"pas"`
+			Hvalue int `json:"hvalue"`
 		} `json:"values"`
 	} `json:"signals"`
 }
 
-func (co *consumption) GetSignalEcowatt(opt utils.Period) (*SignalEcowatt, *http.Response, error) {
+func (co *consumption) GetSignalEcowatt() (*SignalEcowatt, *http.Response, error) {
 	c := co.client
-	req, err := c.NewRequest(http.MethodGet, "open_api/ecowatt/v3/signals", opt)
+	req, err := c.NewRequest(http.MethodGet, "open_api/ecowatt/v4/signals", nil)
 	if err != nil {
 		c.logger.Err(err.Error())
 		return nil, nil, err

@@ -86,7 +86,7 @@ client.Consumption.GetQualityData(gorte.GetQualityDataOptions{
 ```
 - [x] [Ecowatt](https://data.rte-france.com/catalog/-/api/consumption/Ecowatt/v3.0)
 ```Go
-client.Consumption.GetSignalEcowatt(opt)
+client.Consumption.GetSignalEcowatt()
 ```
 - [x] [Tempo Like Supply Contract](https://data.rte-france.com/catalog/-/api/consumption/Tempo-Like-Supply-Contract/v1.1)
 ```Go 
