@@ -25,7 +25,7 @@ type AnnualForecastsResp struct {
 	} `json:"annual_forecasts"`
 }
 
-func (co *consumption) GetAnnualForecasts(opt *utils.Period) (*AnnualForecastsResp, *http.Response, error) {
+func (co *consumption) GetAnnualForecasts(opt utils.Period) (*AnnualForecastsResp, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/consumption/v1/annual_forecasts", opt)
 	if err != nil {
@@ -60,7 +60,7 @@ type WeeklyForecastsResp struct {
 	} `json:"weekly_forecasts"`
 }
 
-func (co *consumption) GetWeeklyForecasts(opt *utils.Period) (*WeeklyForecastsResp, *http.Response, error) {
+func (co *consumption) GetWeeklyForecasts(opt utils.Period) (*WeeklyForecastsResp, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/consumption/v1/weekly_forecasts", opt)
 	if err != nil {
@@ -90,7 +90,7 @@ type ShortTermResp struct {
 	} `json:"short_term"`
 }
 
-func (co *consumption) GetShortTerm(opt *utils.Period) (*ShortTermResp, *http.Response, error) {
+func (co *consumption) GetShortTerm(opt utils.Period) (*ShortTermResp, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/consumption/v1/short_term", opt)
 	if err != nil {

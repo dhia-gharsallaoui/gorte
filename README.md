@@ -138,23 +138,22 @@ import (
         "time"
 
         gorte "github.com/dhia-gharsallaoui/gorte"
-        "github.com/dhia-gharsallaoui/gorte/utils"
+        goutils "github.com/dhia-gharsallaoui/gorte/utils"
 )
 
 func main() {
         key := "YmFiMWY3NjMtODhjZC00OTViLWE5ZTgtOtNDdhZi04YWI2LWRlNjRm=="
         client, err := gorte.NewClient(gorte.ClientConfig{Key: key})
         layout := "2006-01-02 15:04"
-        st, err := time.Parse(layout, "2022-03-01 23:00")
-        if err != nil {
-                fmt.Println(err)
-        }
-        et, err := time.Parse(layout, "2022-03-09 13:00")
-        if err != nil {
-                fmt.Println(err)
-        }
-        opt := utils.Period{st, et}
-        signals, _, err := client.Market.GetSignals(&opt)
+	sd, err := time.Parse(layout, "2022-03-01 23:00")
+	if err != nil {
+		fmt.Println(err)
+	}
+	ed, err := time.Parse(layout, "2022-03-09 13:00")
+	if err != nil {
+		fmt.Println(err)
+	}
+	signals, _, err := client.Market.GetSignals(goutils.Period{StartDate: sd, EndDate: ed})
         if err != nil {
                 fmt.Println(err)
         } else {

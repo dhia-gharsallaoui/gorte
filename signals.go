@@ -25,7 +25,7 @@ type Signals struct {
 	Signal `json:"signals"`
 }
 
-func (s *market) GetSignals(opt *utils.Period) (*Signals, *http.Response, error) {
+func (s *market) GetSignals(opt utils.Period) (*Signals, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/signal/v1/signals", opt)
 	if err != nil {
