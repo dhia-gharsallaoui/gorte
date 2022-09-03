@@ -124,7 +124,7 @@ client.Market.GetProcuredReservesResp(&opt)
 client.Market.GetOperators(&opt)
 client.Market.GetVolumes(&opt) 
 ```
-- [ ] [Wholesale Market](https://data.rte-france.com/catalog/-/api/market/Wholesale-Market/v2.0)
+- [x] [Wholesale Market](https://data.rte-france.com/catalog/-/api/market/Wholesale-Market/v2.0)
 
 #### Partners
 > Not implemented yet.
