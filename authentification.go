@@ -47,6 +47,9 @@ func (c *Client) newToken() (*AuthToken, error) {
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
 	var token AuthToken
 	if err := json.Unmarshal(body, &token); err != nil {
 		return nil, err
