@@ -21,18 +21,18 @@ type Signal []struct {
 	Values    []SignalValue `json:"values"`
 }
 
-type Signals struct {
+type SignalResp struct {
 	Signal `json:"signals"`
 }
 
-func (s *market) GetSignals(opt utils.Period) (*Signals, *http.Response, error) {
+func (s *market) GetSignal(opt utils.Period) (*SignalResp, *http.Response, error) {
 	c := s.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/signal/v1/signals", opt)
 	if err != nil {
 		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
-	sig := &Signals{}
+	sig := &SignalResp{}
 	resp, err := c.Do(req, sig)
 	if err != nil {
 		c.logger.Err(err.Error())
