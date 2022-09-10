@@ -7,8 +7,8 @@ import (
 	"github.com/dhia-gharsallaoui/gorte/utils"
 )
 
-type ConsolidatedPowerConsumption struct {
-	ConsolidatedPowerConsumptions []struct {
+type ConsolidatedPowerConsumptionResp struct {
+	ConsolidatedPowerConsumption []struct {
 		StartDate time.Time `json:"start_date"`
 		EndDate   time.Time `json:"end_date"`
 		Values    []struct {
@@ -21,14 +21,14 @@ type ConsolidatedPowerConsumption struct {
 	} `json:"consolidated_power_consumption"`
 }
 
-func (co *consumption) GetConsolidatedPowerConsumption(opt utils.Period) (*ConsolidatedPowerConsumption, *http.Response, error) {
+func (co *consumption) GetConsolidatedPowerConsumption(opt utils.Period) (*ConsolidatedPowerConsumptionResp, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/consolidated_consumption/v1/consolidated_power_consumption", opt)
 	if err != nil {
 		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
-	sig := &ConsolidatedPowerConsumption{}
+	sig := &ConsolidatedPowerConsumptionResp{}
 	resp, err := c.Do(req, sig)
 	if err != nil {
 		c.logger.Err(err.Error())
@@ -37,8 +37,8 @@ func (co *consumption) GetConsolidatedPowerConsumption(opt utils.Period) (*Conso
 	return sig, resp, err
 }
 
-type ConsolidatedEnergyConsumption struct {
-	ConsolidatedEnergyConsumptions []struct {
+type ConsolidatedEnergyConsumptionResp struct {
+	ConsolidatedEnergyConsumption []struct {
 		StartDate time.Time `json:"start_date"`
 		EndDate   time.Time `json:"end_date"`
 		Values    []struct {
@@ -51,14 +51,14 @@ type ConsolidatedEnergyConsumption struct {
 	} `json:"consolidated_energy_consumption"`
 }
 
-func (co *consumption) GetConsolidatedEnergyConsumption(opt utils.Period) (*ConsolidatedEnergyConsumption, *http.Response, error) {
+func (co *consumption) GetConsolidatedEnergyConsumption(opt utils.Period) (*ConsolidatedEnergyConsumptionResp, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/consolidated_consumption/v1/consolidated_energy_consumption", opt)
 	if err != nil {
 		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
-	sig := &ConsolidatedEnergyConsumption{}
+	sig := &ConsolidatedEnergyConsumptionResp{}
 	resp, err := c.Do(req, sig)
 	if err != nil {
 		c.logger.Err(err.Error())

@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type SignalEcowatt struct {
+type SignalEcowattResp struct {
 	Signals []struct {
 		GenerationFichier time.Time `json:"GenerationFichier"`
 		Jour              time.Time `json:"jour"`
@@ -18,14 +18,14 @@ type SignalEcowatt struct {
 	} `json:"signals"`
 }
 
-func (co *consumption) GetSignalEcowatt() (*SignalEcowatt, *http.Response, error) {
+func (co *consumption) GetSignalEcowatt() (*SignalEcowattResp, *http.Response, error) {
 	c := co.client
 	req, err := c.NewRequest(http.MethodGet, "open_api/ecowatt/v4/signals", nil)
 	if err != nil {
 		c.logger.Err(err.Error())
 		return nil, nil, err
 	}
-	var sig *SignalEcowatt
+	var sig *SignalEcowattResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
 		c.logger.Err(err.Error())
