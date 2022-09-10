@@ -63,7 +63,7 @@ signals, _, err := Client.Market.GetSignals(opt)
 ### Available APIs
 
 #### Consumption
-- [ ] [Consolidated Consumption](https://data.rte-france.com/catalog/-/api/consumption/Consolidated-Consumption/v1.0)
+- [x] [Consolidated Consumption](https://data.rte-france.com/catalog/-/api/consumption/Consolidated-Consumption/v1.0)
 - [x] [Consumption](https://data.rte-france.com/catalog/-/api/consumption/Consumption/v1.2)
 ```Go
 client.Consumption.GetAnnualForecasts(opt)
