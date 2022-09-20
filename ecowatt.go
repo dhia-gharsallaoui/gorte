@@ -20,11 +20,7 @@ type SignalEcowattResp struct {
 
 func (co *consumption) GetSignalEcowatt() (*SignalEcowattResp, *http.Response, error) {
 	c := co.client
-	req, err := c.NewRequest(http.MethodGet, "open_api/ecowatt/v4/signals", nil)
-	if err != nil {
-		c.logger.Err(err.Error())
-		return nil, nil, err
-	}
+	req, _ := c.NewRequest(http.MethodGet, "open_api/ecowatt/v4/signals", nil)
 	var sig *SignalEcowattResp
 	resp, err := c.Do(req, &sig)
 	if err != nil {
